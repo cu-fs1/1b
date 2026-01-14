@@ -29,8 +29,7 @@ function validateAmount(amount) {
   return amount > 0 && !isNaN(amount);
 }
 
-depositBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+depositBtn.addEventListener("click", () => {
   const amount = parseFloat(amountInput.value);
 
   if (validateAmount(amount)) {
@@ -43,8 +42,7 @@ depositBtn.addEventListener("click", (e) => {
   }
 });
 
-withdrawBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+withdrawBtn.addEventListener("click", () => {
   const amount = parseFloat(amountInput.value);
 
   if (!validateAmount(amount)) {
@@ -56,8 +54,7 @@ withdrawBtn.addEventListener("click", (e) => {
     balance -= amount;
     updateBalance();
     hideError();
-    errorMessage.textContent = "Invalid amount!";
-    amountInput.value = "";
+    amountInput.value = 0;
   }
 });
 
