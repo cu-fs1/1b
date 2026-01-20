@@ -1,128 +1,149 @@
 # Simple Banking UI
 
-A responsive banking application with deposit and withdrawal functionality. This project demonstrates HTML structure, CSS styling, and JavaScript event handling.
+A simple banking application that allows users to deposit and withdraw money with real-time balance updates. The application uses local storage to persist balance data across browser sessions.
 
----
-
-## File Explanations
+## Code Explanation
 
 ### index.html
 
 The HTML file provides the structure for the banking interface:
 
-- **Document Setup**: Uses HTML5 DOCTYPE and UTF-8 charset for proper character encoding
-- **Meta Tags**: Includes viewport meta tag for responsive design on mobile devices
-- **Title**: "Simple Banking UI" displayed in the browser tab
-- **Stylesheet**: Links to `styles.css` for styling
+**Document Structure:**
+- `<!DOCTYPE html>` - Declares this as an HTML5 document
+- `<html lang="en">` - Root element with English language attribute
+- `<head>` section contains metadata:
+  - `<meta charset="UTF-8">` - Sets character encoding to UTF-8 for international character support
+  - `<meta name="viewport">` - Ensures responsive design on mobile devices
+  - `<title>` - Sets the page title shown in browser tabs
+  - `<link rel="stylesheet">` - Links to the external CSS file for styling
 
-**Main Elements**:
-- **Balance Display**: An `<h1>` element with id `balance-display` that shows the current account balance (initialized at $1000)
-- **Banking Form**: A form with id `banking-form` containing:
-  - **Amount Input**: A number input field (id: `amount`) that accepts decimal values with step="0.01" for currency precision
-  - **Deposit Button**: A button with id `deposit-btn` that uses `onclick="handleDeposit()"` to trigger the deposit function
-  - **Withdraw Button**: A button with id `withdraw-btn` with an event listener for withdrawal functionality
-  - **Error Message**: A paragraph element (id: `error-message`) that displays validation errors
-- **Script**: Links to `script.js` for JavaScript functionality
-
----
+**Body Content:**
+- `<main class="banking-container">` - Main container for the banking interface
+- `<h1 id="balance-display">` - Displays the current balance with an ID for JavaScript access
+- `<form id="banking-form">` - Contains the banking operations form
+  - `<input type="number">` - Number input field for entering amounts with:
+    - `step="0.01"` - Allows decimal values (cents)
+    - `id="amount"` - Identifier for JavaScript manipulation
+  - `<button id="deposit-btn">` - Deposit button with inline `onclick` event handler
+  - `<button id="withdraw-btn">` - Withdraw button (event listener added in JavaScript)
+  - `<p id="error-message">` - Error message container (initially hidden via CSS)
+- `<script src="script.js">` - Links to external JavaScript file
 
 ### styles.css
 
 The CSS file handles all visual styling and layout:
 
-**Theme Colors**:
-- Primary Blue (`#1e40ff`): Used for deposit button
-- Error Red (`#dc3545`): Used for error messages and withdraw button
+**CSS Variables:**
+- `:root` selector defines reusable color variables:
+  - `--primary-blue: #1e40ff` - Blue color for deposit button
+  - `--error-red: #dc3545` - Red color for errors and withdraw button
 
-**Layout Structure**:
-- **Body**: Uses flexbox to center the container vertically and horizontally on the page
-- **Banking Container**: A white card with 400px width, rounded corners (8px), and padding (40px)
+**Global Styles:**
+- `* { ... }` - Universal selector resets margins and padding, applies border-box sizing
+- `body` - Centers content using flexbox, sets background color and typography
 
-**Typography**:
-- Imports "Inter" and "Poppins" fonts from Google Fonts
-- Default system font stack as fallback: `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto"`
-- Balance display is 36px bold text centered
-- Input label is 18px regular text
+**Component Styles:**
+- `.banking-container` - White card with rounded corners (8px radius) and 40px padding
+- `.balance-display` - Large (36px), bold text centered for balance visibility
+- `.input-field` - Styled input with red border by default, green border when valid
+- `.input-field:focus` - Removes default outline and adds custom focus styles
+- `.actions` - Grid layout with 2 columns for side-by-side buttons
+- `.btn` - Base button styling with padding, border-radius, and white text
+- `.btn-deposit` - Blue background using CSS variable
+- `.btn-withdrawal` - Red background using CSS variable
+- `.error-message` - Red, centered error text
 
-**Input Field Styling**:
-- Default state: Red border indicating invalid/empty state
-- Valid state: Green border (`#22c55e`) when valid amount is entered
-- Focus state: Green outline when focused with valid input
-- Full width with 12px padding
-
-**Button Styling**:
-- Both buttons have 14px padding, rounded corners, and cursor pointer
-- Deposit button: Blue background
-- Withdraw button: Red background
-- Both buttons have hover effect with 0.9 opacity
-
-**Error Message**:
-- Red text, 18px font size, centered alignment
-- Can be toggled visible/hidden via JavaScript
-
-**Responsive Design**:
-- Mobile view: Full width with adjusted container padding, smaller balance text, single-column button layout
-- Applies at 480px minimum width breakup
-
----
+**Responsive Design:**
+- `@media (min-width: 480px)` - Adjusts layout for smaller screens:
+  - Reduces padding and container width
+  - Changes button grid to single column
+  - Reduces balance font size
 
 ### script.js
 
-The JavaScript file handles all functionality and data persistence:
+The JavaScript file implements the banking logic and interactivity:
 
-**Data Storage**:
-- **Balance Variable**: Loads from browser's localStorage with key "bankBalance" or defaults to $1000
-- Updates localStorage whenever balance changes to persist data across browser sessions
+**State Management:**
+- `localStorage.getItem("bankBalance")` - Retrieves saved balance from browser storage
+- `parseFloat()` - Converts string to decimal number
+- `|| 1000` - Uses default value of 1000 if no saved balance exists
 
-**DOM References**:
-- Caches references to all interactive elements: balance display, input field, buttons, error message, and form
+**DOM References:**
+- Multiple `document.getElementById()` calls store references to HTML elements for efficient access
 
-**Utility Functions**:
-- **updateBalance()**: Updates the balance display text and saves to localStorage
-- **showError()**: Makes the error message visible (display: block)
-- **hideError()**: Hides the error message (display: none)
-- **validateAmount()**: Checks if amount is positive and a valid number
+**Core Functions:**
 
-**Deposit Functionality** (`handleDeposit()`):
-- Called via `onclick` attribute on the deposit button
-- Validates the amount input
-- If valid: Adds amount to balance, updates display, clears input, hides error
-- If invalid: Shows error message
+1. `updateBalance()` - Updates display and saves to localStorage
+   - Uses template literal to format balance text
+   - `localStorage.setItem()` persists data across sessions
 
-**Withdraw Functionality**:
-- Event listener on withdraw button
-- Validates amount is positive
-- Checks if sufficient funds exist
-- If insufficient: Shows "Insufficient funds!" error message
-- If valid: Subtracts amount from balance, updates display, clears input, hides error
+2. `showError()` / `hideError()` - Toggle error message visibility by changing CSS display property
 
-**Input Validation**:
-- Real-time input listener that validates on each keystroke
-- Valid amount adds "valid" class to input (green border)
-- Invalid amount removes "valid" class and shows error
-- Provides instant visual feedback to the user
+3. `validateAmount(amount)` - Validates user input:
+   - Checks if amount is positive
+   - Uses `isNaN()` to verify it's a valid number
 
-**Form Submission Prevention**:
-- Prevents default form submission behavior to avoid page reload
+4. `handleDeposit()` - Processes deposit transactions:
+   - Parses input value to float
+   - Validates amount
+   - Adds to balance using `+=` operator
+   - Clears input field after successful deposit
 
----
+**Event Listeners:**
 
-## Glossary of Abbreviations
+1. **Withdraw Button** - `addEventListener("click", ...)`:
+   - Validates amount
+   - Checks for sufficient funds
+   - Subtracts from balance using `-=` operator
+   - Shows custom error message for insufficient funds
 
-| Abbreviation | Full Form |
-|--------------|-----------|
-| **HTML** | HyperText Markup Language |
-| **CSS** | Cascading Style Sheets |
-| **DOM** | Document Object Model |
-| **API** | Application Programming Interface |
-| **JSON** | JavaScript Object Notation |
-| **UTF-8** | 8-bit Unicode Transformation Format |
-| **DOCTYPE** | Document Type Declaration |
-| **SVG** | Scalable Vector Graphics |
-| **PNG** | Portable Network Graphics |
-| **px** | Pixels |
-| **rem** | Root Element |
-| **em** | Element |
-| **RGB** | Red, Green, Blue |
-| **RGBA** | Red, Green, Blue, Alpha |
-| **NaN** | Not a Number |
+2. **Amount Input** - `addEventListener("input", ...)`:
+   - Real-time validation as user types
+   - Adds/removes "valid" CSS class for visual feedback
+   - Shows/hides error messages dynamically
+
+3. **Form Submit** - `addEventListener("submit", ...)`:
+   - `e.preventDefault()` prevents page reload on form submission
+
+**Initial Load:**
+- `updateBalance()` is called immediately to display loaded balance
+
+## Glossary of Terms
+
+### HTML Abbreviations
+- **HTML** - HyperText Markup Language
+- **DOCTYPE** - Document Type Declaration
+- **UTF** - Unicode Transformation Format
+- **UI** - User Interface
+- **SVG** - Scalable Vector Graphics
+- **ID** - Identifier
+
+### CSS Abbreviations
+- **CSS** - Cascading Style Sheets
+- **URL** - Uniform Resource Locator
+- **RGB/RGBA** - Red Green Blue / Red Green Blue Alpha
+- **PX** - Pixels
+- **VH** - Viewport Height
+- **FR** - Fractional Unit (CSS Grid)
+- **REM** - Root Em (relative unit)
+
+### JavaScript Abbreviations
+- **JS** - JavaScript
+- **DOM** - Document Object Model
+- **NaN** - Not a Number
+- **API** - Application Programming Interface
+- **JSON** - JavaScript Object Notation
+
+### General Programming Terms
+- **localStorage** - Browser API for storing key-value pairs persistently
+- **parseFloat** - Function to convert strings to floating-point numbers
+- **addEventListener** - Method to attach event handlers to DOM elements
+- **getElementById** - Method to select HTML elements by their ID attribute
+- **preventDefault** - Method to stop default browser behavior
+- **Template Literal** - String syntax using backticks (`) for variable interpolation
+- **CSS Variable** - Custom property defined with -- prefix for reusable values
+- **Event Handler** - Function that responds to user interactions
+- **Flexbox** - CSS layout model for flexible responsive design
+- **Grid** - CSS layout system for two-dimensional layouts
+- **Responsive Design** - Approach to make web pages adapt to different screen sizes
+- **Media Query** - CSS technique to apply styles based on device characteristics
