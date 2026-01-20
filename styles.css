@@ -3,34 +3,7 @@
 :root {
   /* Colors */
   --primary-blue: #1e40ff;
-  --primary-red: #dc3545;
-  --text-primary: #000;
-  --text-secondary: #6b7280;
-  --bg-light: #f5f5f5;
-  --bg-white: #fff;
-  --border-light: #d1d5db;
   --error-red: #dc3545;
-
-  /* Spacing */
-  --spacing-xs: 8px;
-  --spacing-sm: 12px;
-  --spacing-md: 20px;
-  --spacing-lg: 30px;
-  --spacing-xl: 40px;
-
-  /* Border Radius */
-  --radius-sm: 6px;
-  --radius-md: 8px;
-
-  /* Font Sizes */
-  --font-sm: 16px;
-  --font-md: 18px;
-  --font-lg: 28px;
-  --font-xl: 36px;
-
-  /* Fonts */
-  --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    sans-serif;
 }
 
 * {
@@ -40,28 +13,29 @@
 }
 
 body {
-  font-family: var(--font-primary);
-  background: var(--bg-light);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+      sans-serif;
+    background: #f5f5f5;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--spacing-md);
+  padding: 20px;
 }
 
 .banking-container {
-  background: var(--bg-white);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-xl);
+  background: #fff;
+    border-radius: 8px;
+    padding: 40px;
   width: 400px;
 }
 
 .balance-display {
-  font-size: var(--font-xl);
+  font-size: 36px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #000;
   text-align: center;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 30px;
 }
 
 .banking-form {
@@ -70,26 +44,26 @@ body {
 }
 
 .input-section {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 20px;
 }
 
 .input-label {
   display: block;
-  color: var(--text-primary);
-  font-size: var(--font-md);
+  color: #000;
+    font-size: 18px;
   font-weight: 400;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 8px;
 }
 
 .input-field {
   width: calc(100% - 26px);
   padding: 12px;
   border: 1px solid var(--error-red);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-primary);
-  font-size: var(--font-sm);
-  color: var(--text-primary);
-  background: var(--bg-white);
+  border-radius: 6px;
+    font-family: inherit;
+    font-size: 16px;
+    color: #000;
+    background: #fff;
 }
 
 .input-field.valid {
@@ -106,30 +80,21 @@ body {
   outline-offset: 0;
 }
 
-.input-field:invalid {
-  border-color: var(--error-red);
-}
-
-.input-field:invalid:focus {
-  outline: 2px solid var(--error-red);
-  border-color: var(--error-red);
-}
-
 .actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
+  gap: 12px;
+    margin-bottom: 20px;
 }
 
 .btn {
   padding: 14px 24px;
   border: none;
-  border-radius: var(--radius-sm);
-  font-size: var(--font-md);
+  border-radius: 6px;
+    font-size: 18px;
   font-weight: 600;
   cursor: pointer;
-  color: var(--bg-white);
+  color: #fff;
 }
 
 .btn-deposit {
@@ -141,7 +106,7 @@ body {
 }
 
 .btn-withdrawal {
-  background: var(--primary-red);
+  background: var(--error-red);
 }
 
 .btn-withdrawal:hover {
@@ -150,7 +115,7 @@ body {
 
 .error-message {
   color: var(--error-red);
-  font-size: var(--font-md);
+  font-size: 18px;
   text-align: center;
   font-weight: 500;
   display: block;
@@ -164,7 +129,7 @@ body {
   }
 
   .balance-display {
-    font-size: var(--font-lg);
+    font-size: 28px;
   }
 
   .actions {

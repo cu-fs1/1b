@@ -1,4 +1,9 @@
 // Load balance from localStorage or use default
+
+
+
+
+
 let balance = parseFloat(localStorage.getItem("bankBalance")) || 1000;
 
 const balanceDisplay = document.getElementById("balance-display");
@@ -8,7 +13,7 @@ const withdrawBtn = document.getElementById("withdraw-btn");
 const errorMessage = document.getElementById("error-message");
 const form = document.getElementById("banking-form");
 
-function updateBalance() {
+function updateBalance() {``
   balanceDisplay.textContent = `Balance: ${balance}`;
   // Save to localStorage
   localStorage.setItem("bankBalance", balance);
@@ -36,7 +41,7 @@ depositBtn.addEventListener("click", () => {
     balance += amount;
     updateBalance();
     hideError();
-    amountInput.value = 0;
+    amountInput.value = "";
   } else {
     showError();
   }
@@ -54,7 +59,7 @@ withdrawBtn.addEventListener("click", () => {
     balance -= amount;
     updateBalance();
     hideError();
-    amountInput.value = 0;
+    amountInput.value = "";
   }
 });
 
