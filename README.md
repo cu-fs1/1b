@@ -87,7 +87,7 @@ The JavaScript file implements the banking logic and interactivity:
    - Parses input value to float
    - Validates amount
    - Adds to balance using `+=` operator
-   - Clears input field after successful deposit
+   - Clears input field and restores focus to it after the transaction attempt
 
 **Event Listeners:**
 
@@ -96,6 +96,7 @@ The JavaScript file implements the banking logic and interactivity:
    - Checks for sufficient funds
    - Subtracts from balance using `-=` operator
    - Shows custom error message for insufficient funds
+   - Restores focus to the input field after the transaction attempt
 
 2. **Amount Input** - `addEventListener("input", ...)`:
    - Real-time validation as user types
